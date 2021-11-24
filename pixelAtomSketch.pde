@@ -11,7 +11,8 @@ boolean isCampoActive = false;
 boolean isPlaying = false;
 
 void setup() {
-  size(1024,1280);
+  //size(1024,1280);
+  size(800,960);
   //size(1280,720);
   //size(600, 600);
   //size(512,640);
@@ -47,8 +48,12 @@ void play() {
     cluster.atravesarCampo(campo, "OTHERSIDE");
     break;
   case 4:
-    cluster.deambularCluster("REVERSE_XY");
+    cluster.deambularCluster("OTHERSIDE");
     break;
+  case 5:
+     ArrayList<PixelAtom> otras = cluster.getPixels();
+     cluster.manadaCluster(otras,"OTHERSIDE");
+     break;
   default:
     cluster.initialPosition();
     break;
@@ -57,13 +62,14 @@ void play() {
 
 void keyPressed() {
   println(keyCode);
-  if (keyCode == 49) selector = 1;  // Numero 1
-  if (keyCode == 50) selector = 2;  // Numero 2
-  if (keyCode == 51) selector = 3;  // Numero 3
-  if (keyCode == 52) selector = 4;  // Numero 4
-  if (keyCode == 67)isCampoActive = !isCampoActive;  // Letra "c"
-  if (keyCode == 68) campo.initNoise();  // Letra "d"
-  if (keyCode == 80) isPlaying = !isPlaying;  // Letra "p"
-  if (keyCode == 86) campo.initImage(img);  // Letra "v"
-  if (keyCode == 83) cluster.cambiarShape();  // Letra "s"
+  if (keyCode == 49) {selector = 1; println("original mode");} // Numero 1
+  if (keyCode == 50) {selector = 2; println("mouse mode");}  // Numero 2
+  if (keyCode == 51) {selector = 3; println("field mode");}  // Numero 3
+  if (keyCode == 52) {selector = 4; println("walk mode"); } // Numero 4
+  if (keyCode == 68) {campo.initNoise(); println("Noise Field");}// Letra "d"
+  if (keyCode == 69) {campo.initImage(img); println("Image Field");} // Letra "e"
+  if (keyCode == 80) {isPlaying = !isPlaying;  println("Play / Pause");} // Letra "p"
+  if (keyCode == 83) {cluster.cambiarShape(); println("Cambio la forma");}  // Letra "s"
+  if (keyCode == 86) {cluster.cambiarLifeMode(); println("Cambio la vida");}  // Letra "v"
+  if (keyCode == 67) {isCampoActive = !isCampoActive; println("Cambio campo");}   // Letra "c"
 }

@@ -143,7 +143,7 @@ class PixelCluster{
     }
   }
   
-  ArrayList<PixelAtom> getBolitas() {
+  ArrayList<PixelAtom> getPixels() {
     return cluster;
   }
   
