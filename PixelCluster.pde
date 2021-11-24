@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Iterator;
 
 class PixelCluster{
@@ -9,7 +10,7 @@ class PixelCluster{
       pixy.drawPixel();
       cluster.add(pixy);
     }
-    noLoop();
+    print("Creando el cluster");
   }
   
   void staticDraw() {

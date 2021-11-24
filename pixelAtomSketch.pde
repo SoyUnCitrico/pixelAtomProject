@@ -5,15 +5,17 @@
 ArrayList<PixelAtom> pixeles = new ArrayList<PixelAtom>();
 PImage img;
 int dimension;
-int cellSize = 10;
+int cellSize = 2;
 boolean isStatic = true;
 
 void setup() {
   ellipseMode(CORNER);
   rectMode(CORNER);
   //size(1024,1280);
-  size(512,640);
-  img = loadImage("teamFic.jpg");
+  //size(1280,720);
+  size(512,512);
+  //size(256,256);
+  img = loadImage("./pictures/profile-nobg.png");
   img.resize(width,height);
   img.loadPixels();
   for (int y = 0; y < img.height; y+=cellSize ) {
@@ -32,15 +34,15 @@ void setup() {
 
 
 void draw() {
-  background(0);
+  background(#f6d2aD);
  if(isStatic) {
     for(PixelAtom pix : pixeles) {
-      pix.arrivarTarget(pix.originalPosition, 100, "REVERSE_XY");
+      pix.arrivarTarget(pix.originalPosition, 35, "REVERSE_XY");
     }
   } else {
     for(PixelAtom pix : pixeles) {
       PVector mousePos = new PVector(mouseX, mouseY);
-      pix.arrivarTarget(mousePos, 20, "REVERSE_XY");
+      pix.arrivarTarget(mousePos, 20, "OTHERSIDE");
     }
   }
 }
