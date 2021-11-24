@@ -2,22 +2,35 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 class PixelCluster{
-  ArrayList<PixelAtom> cluster;
-  int numElementos;
+  ArrayList<PixelAtom> cluster = new ArrayList<PixelAtom>();
+  PImage img;
   
-  PixelCluster(ArrayList<PixelAtom> pics) {
-    for(PixelAtom pixy : pics) {
-      pixy.drawPixel();
-      cluster.add(pixy);
+  PixelCluster(PImage picture, int cellSize) {
+    picture.loadPixels();
+    for (int y = 0; y < picture.height; y+=cellSize ) {
+      for (int x = 0; x < picture.width; x+=cellSize ) {
+        int loc = x + y*picture.width;
+    //    // The functions red(), green(), and blue() pull out the three color components from a pixel.
+        float r = red(picture.pixels [loc]); 
+        float g = green(picture.pixels[loc]);
+        float b = blue(picture.pixels[loc]);
+        float a = alpha(picture.pixels[loc]);
+        //println("Los colores son: ", r,g,b);
+        //PixelAtom pix = new PixelAtom(x, y, cellSize, cellSize, color(r, g, b));
+        //cluster.add(new PixelAtom(x, y, cellSize, cellSize, color(r, g, b)));
+        cluster.add(new PixelAtom(x, y, cellSize, cellSize, color(r, g, b, a)));
+      }
     }
-    print("Creando el cluster");
+    picture.updatePixels();
+    println("Creando el cluster");
   }
   
-  void staticDraw() {
-     Iterator<PixelAtom> it = cluster.iterator();
-     while (it.hasNext()) {
+  void initialPosition() {
+    Iterator<PixelAtom> it = cluster.iterator();
+    
+    while (it.hasNext()) {
       PixelAtom b = it.next();
-      b.drawPixel();
+      b.arrivarTarget(b.originalPosition, 35, "REVERSE_XY");
       if (b.isDead()) {
          it.remove();
          String logOut = String.format("Bolitas en el cluster: %d\n", cluster.size());
@@ -124,9 +137,14 @@ class PixelCluster{
     }  
   }
   
+  void cambiarShape() {
+    for(PixelAtom pix : cluster) {
+      pix.tooglePixelShape();    
+    }
+  }
+  
   ArrayList<PixelAtom> getBolitas() {
     return cluster;
   }
-  
   
 }

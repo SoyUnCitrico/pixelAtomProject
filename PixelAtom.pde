@@ -22,8 +22,6 @@ class PixelAtom {
   color skin,
         originalSkin;
   
-  
-  
   ////////////////////// CONSTRUCTORES ////////////////////
   PixelAtom() {
     initPixel();
@@ -55,7 +53,8 @@ class PixelAtom {
     originalSkin = skin;
     position = new PVector(floor(random(width)),floor(random(height)));
     originalPosition = position.copy();
-    velocity = new PVector(random(-5, 5), random(-5, 5)).limit(4);
+    //velocity = new PVector(random(-5, 5), random(-5, 5)).limit(4);
+    velocity = new PVector(random(-5, 5), random(-5, 5)).normalize();
     acceleration = new PVector(0,0);
     wanderTheta = 0;
     life = 100;

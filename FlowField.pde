@@ -1,14 +1,9 @@
 // The Nature of Code
-// Daniel Shiffman
-// http://natureofcode.com
-
-// Flow Field Following
 
 class FlowField {
 
   // A flow field is a two dimensional array of PVectors
   PVector[][] field;
-  PImage fieldImage;
   int cols, rows; // Columns and Rows
   int resolution; // How large is each "cell" of the flow field
 
@@ -21,7 +16,7 @@ class FlowField {
     initNoise();
   }
 
-  FlowField(int r, PImage picture) {
+  FlowField(PImage picture, int r) {
     resolution = r;
     // Determine the number of columns and rows based on sketch's width and height
     cols = width/resolution;
