@@ -80,7 +80,7 @@ class FlowField {
     pushMatrix();
     // Translate to position to render vector
     translate(x, y);
-    strokeWeight(2);
+    strokeWeight(1);
     stroke(255, 0, 0);
     // Call vector heading function to get direction (note that pointing up is a heading of 0) and rotate
     rotate(v.heading());
