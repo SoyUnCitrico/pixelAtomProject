@@ -117,6 +117,12 @@ class PixelCluster{
     }
   }
   
+  void reset() {
+    for(PixelAtom pixy : cluster){
+      pixy.setPosition(pixy.originalPosition);
+    }
+  }
+  
   void crecer() {
     cluster.add(new PixelAtom());
     String logOut = String.format("Bolitas en el cluster: %d\n", cluster.size());
@@ -131,10 +137,13 @@ class PixelCluster{
   }
   
   void cambiarLifeMode() {
-    for(int i = 0; i < cluster.size(); i++) {
-      PixelAtom b = cluster.get(i);
-      b.toogleLife();    
-    }  
+    //for(int i = 0; i < cluster.size(); i++) {
+    //  PixelAtom b = cluster.get(i);
+    //  b.toogleLife();    
+    //}
+    for(PixelAtom pix : cluster) {
+      pix.toogleLife();    
+    }
   }
   
   void cambiarShape() {
