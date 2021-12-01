@@ -10,20 +10,24 @@ PixelCluster cluster;
 PImage img;
 int cellSize = 5;
 int selector = 1;
+String barrerDirection = "DOWN";
+boolean firstShake = true; 
+boolean blackBack = true; 
 boolean isCampoActive = false;
 boolean isPlaying = false;
 boolean isNew = true;
 
 void setup() {
+  //size(1280,1024);
   //size(1024,1280);
   //size(800,960);
+  //size(1920,1080);
   size(1280,720);
   //size(640, 480);
   //size(512,640);
   //size(256,256);
   //fullScreen();
   String[] cameras = Capture.list();
-  
   if (cameras.length == 0) {
     println("No hay camaras disponibles");
     exit();
@@ -31,10 +35,10 @@ void setup() {
     println("Las cámaras disponibles son:");
     for (int i = 0; i < cameras.length; i++) {
       print(i);
-      print(" --- - ");
+      print(" ---- ");
       println(cameras[i]);
     }
-    cam = new Capture(this, cameras[0]);
+    cam = new Capture(this, cameras[1]);
     cam.start();     
   }
   
@@ -42,6 +46,7 @@ void setup() {
 }
 
 void draw() {
+  
   if(isNew){
     if (cam.available()) {
       cam.read();
@@ -53,9 +58,11 @@ void draw() {
     popMatrix();
   }
   else {
+    
     //background(#11fad2);
     //image(img, 0, 0);
     if(isPlaying) {
+      if(blackBack) background(0);
       play();
     }
   }
@@ -67,29 +74,56 @@ void play() {
   switch(selector) {
   case 1:
     cluster.initialPosition();
+    firstShake = true;
     break;
   case 2:
     cluster.seguirMouse();
+    firstShake = true;
     break;
   case 3:
     cluster.atravesarCampo(campo, "OTHERSIDE");
+    firstShake = true;
     break;
   case 4:
     cluster.deambularCluster("OTHERSIDE");
+    firstShake = true;
     break;
   case 5:
-     ArrayList<PixelAtom> otras = cluster.getPixels();
-     cluster.manadaCluster(otras,"OTHERSIDE");
-     break;
+    cluster.barrerCluster(barrerDirection);
+    firstShake = true;
+    break;
+  case 6:
+    if(firstShake){
+      cluster.savePosition();
+      firstShake = false;
+    }
+    cluster.temblarCluster();
+    break;
+  //case 5:
+  //   ArrayList<PixelAtom> otras = cluster.getPixels();
+  //   cluster.manadaCluster(otras,"OTHERSIDE");
+  //   break;
   default:
     cluster.initialPosition();
+    firstShake = true;
     break;
   }
 }
 
 void keyPressed() {
-  println(keyCode);
   switch(keyCode) {
+    case 37:
+      barrerDirection = "LEFT";
+      break;
+    case 38:
+      barrerDirection = "UP";
+      break;
+    case 39:
+      barrerDirection = "RIGHT";
+      break;
+    case 40:
+      barrerDirection = "DOWN";
+      break;
     case 49:
       // Numero 1
       selector = 1;
@@ -109,6 +143,21 @@ void keyPressed() {
       // Numero 4
       selector = 4; 
       println("walk mode");
+      break;
+    case 53:
+      // Numero 5
+      selector = 5; 
+      println("barrer mode");
+      break;  
+    case 54:
+      // Numero 6
+      selector = 6; 
+      println("Shake mode");
+      break;  
+    case 66:
+      // Letra "b"
+      blackBack = !blackBack;
+      println("Black background");
       break;
     case 67:
       // Letra "c"
@@ -132,8 +181,10 @@ void keyPressed() {
       break;
     case 82:
       // Letra "r"
-      cluster.reset();
-      selector = 1;
+      if(isPlaying) {
+        cluster.reset();
+        selector = 1;
+      }
       println("Reset");
       break;
     case 83:

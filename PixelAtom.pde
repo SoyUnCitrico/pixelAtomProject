@@ -11,6 +11,7 @@ class PixelAtom {
         wanderTheta;
         
   PVector position,
+          staticPosition,
           velocity,
           acceleration,
           originalPosition;
@@ -59,8 +60,8 @@ class PixelAtom {
     wanderTheta = 0;
     life = 100;
     damage = .1;
-    maxSpeed = 4;
-    maxForce = 0.1;
+    maxSpeed = 8; //Controla la velocidad maxima del movimiento de las particulas
+    maxForce = 0.5; //Controla la fuerza de atraccion con las demas particulas
     squarePixel = true;
     isDebugging = false;
     isLiving = false;
@@ -80,6 +81,18 @@ class PixelAtom {
 
   void arrivarTarget(PVector target, float targetRadius, String typeBoundaries) {
     arrive(target, targetRadius);
+    actualizar();
+    checkLimits(typeBoundaries);
+    if (isLiving)  {
+      living();
+    }
+    drawPixel();
+  }
+  
+  void temblar(float movement, float offset, String typeBoundaries) {
+    
+    PVector newPos = new PVector(staticPosition.x + movement - offset, staticPosition.y);
+    setPosition(newPos);
     actualizar();
     checkLimits(typeBoundaries);
     if (isLiving)  {
@@ -210,6 +223,9 @@ class PixelAtom {
   }
   
   ///////////////// TOOGLE ///////////////// 
+  void saveStaticPosition() {
+    staticPosition = position.copy();
+  }
   
   void tooglePixelShape() {
     squarePixel = !squarePixel;
