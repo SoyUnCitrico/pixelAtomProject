@@ -196,6 +196,7 @@ void keyPressed() {
       // Letra "t"
       if(isNew) {
         println("Foto tomada");
+        saveFrame("pictures/atomPixel-######.png");
         loadPixels();
         isNew = false;
         cam.stop();
