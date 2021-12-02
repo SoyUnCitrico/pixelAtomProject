@@ -23,6 +23,7 @@ void setup() {
   //size(800,960);
   //size(1920,1080);
   size(1280,720);
+  //size(1152,648);
   //size(640, 480);
   //size(512,640);
   //size(256,256);
@@ -38,7 +39,7 @@ void setup() {
       print(" ---- ");
       println(cameras[i]);
     }
-    cam = new Capture(this, cameras[1]);
+    cam = new Capture(this, cameras[2]);
     cam.start();     
   }
   
@@ -196,7 +197,6 @@ void keyPressed() {
       // Letra "t"
       if(isNew) {
         println("Foto tomada");
-        saveFrame("pictures/atomPixel-######.png");
         loadPixels();
         isNew = false;
         cam.stop();
