@@ -22,9 +22,9 @@ void setup() {
   //size(1024,1280);
   //size(800,960);
   //size(1920,1080);
-  size(1280,720);
+  //size(1280,720);
   //size(1152,648);
-  //size(640, 480);
+  size(640, 480);
   //size(512,640);
   //size(256,256);
   //fullScreen();
@@ -39,11 +39,18 @@ void setup() {
       print(" ---- ");
       println(cameras[i]);
     }
-    cam = new Capture(this, cameras[2]);
+    cam = new Capture(this, cameras[0]);
     cam.start();     
   }
   
   println("Modo Camara");
+  
+  if(cluster == null) {
+    println("Estoy en null");
+  } else {
+    println("cluster existe");
+    println(cluster);
+  }
 }
 
 void draw() {
@@ -100,10 +107,9 @@ void play() {
     }
     cluster.temblarCluster();
     break;
-  //case 5:
-  //   ArrayList<PixelAtom> otras = cluster.getPixels();
-  //   cluster.manadaCluster(otras,"OTHERSIDE");
-  //   break;
+  case 7:
+    
+    break;
   default:
     cluster.initialPosition();
     firstShake = true;
@@ -221,6 +227,24 @@ void keyPressed() {
       // Letra "v"
       cluster.cambiarLifeMode(); 
       println("Cambio la vida");
+      break;
+    case 107:
+      // Letra "+"
+      if(cluster != null) {
+        float aumento = 0.2;
+        cluster.changeSpeed(aumento);
+      } else  {
+        println("No hay cluster");
+      }
+      break;
+    case 109:
+      //Letra "-"
+      if(cluster != null) {
+          float aumento = -0.2;
+          cluster.changeSpeed(aumento);
+        } else  {
+          println("No hay cluster");
+        }
       break;
     default:
       println(keyCode);

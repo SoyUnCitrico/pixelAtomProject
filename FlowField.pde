@@ -98,4 +98,6 @@ class FlowField {
     int row = int(constrain(lookup.y/resolution, 0, rows-1));
     return field[column][row].copy();
   }
+  
+  PVector
 }

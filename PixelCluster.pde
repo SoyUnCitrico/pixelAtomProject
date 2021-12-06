@@ -214,7 +214,17 @@ class PixelCluster {
       pix.saveStaticPosition();
     }
   }
-
+  
+  void changeSpeed(float aumento) {
+    float finalSpeed = 0;
+    for(PixelAtom pix:cluster) {
+      pix.setMaxSpeed(aumento);
+      finalSpeed = pix.maxSpeed;
+    }
+    print("The actual max speed is: ");
+    println(finalSpeed);
+  }
+  
   ArrayList<PixelAtom> getPixels() {
     return cluster;
   }

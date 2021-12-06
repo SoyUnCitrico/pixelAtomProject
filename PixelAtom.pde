@@ -60,7 +60,7 @@ class PixelAtom {
     wanderTheta = 0;
     life = 100;
     damage = .1;
-    maxSpeed = 8; //Controla la velocidad maxima del movimiento de las particulas
+    maxSpeed = 4; //Controla la velocidad maxima del movimiento de las particulas
     maxForce = 0.5; //Controla la fuerza de atraccion con las demas particulas
     squarePixel = true;
     isDebugging = false;
@@ -216,6 +216,10 @@ class PixelAtom {
 
   void setPosition(PVector p) {
     position = p.copy();
+  }
+  
+  void setMaxSpeed(float speedStep) {
+    maxSpeed += speedStep;
   }
 
   float getLife() {
